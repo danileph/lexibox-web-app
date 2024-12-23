@@ -1,6 +1,6 @@
 import { cva, VariantProps } from 'class-variance-authority';
 import React, { forwardRef } from 'react';
-import { cn } from '@/shared/lib/tailwindUtils';
+import { cn } from '@/shared/lib/utils';
 
 const textVariants = cva('', {
   variants: {
