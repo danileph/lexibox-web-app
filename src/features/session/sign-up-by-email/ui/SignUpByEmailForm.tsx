@@ -3,8 +3,9 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import React, { forwardRef } from 'react';
 import { useForm } from 'react-hook-form';
-import { SignInByEmailFormData } from '@/features/session/sign-in-by-email/model/types';
-import { signInByEmailFormSchema } from '@/features/session/sign-in-by-email/model/validator';
+import { useRegisterApi } from '@/features/session/sign-up-by-email/api/register/hooks';
+import { SignUpByEmailFormData } from '@/features/session/sign-up-by-email/model/types';
+import { signUpByEmailFormSchema } from '@/features/session/sign-up-by-email/model/validator';
 import { cn } from '@/shared/lib/utils';
 import { Button } from '@/shared/ui/button';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/shared/ui/form';
@@ -17,17 +18,22 @@ interface SignInFormProps extends React.HTMLAttributes<HTMLFormElement> {}
  * @param {SignInFormProps} props - The props for the SignUpByEmailForm component
  * @returns JSX.Element
  */
-export const SignInByEmailForm = forwardRef<HTMLFormElement, SignInFormProps>(
+export const SignUpByEmailForm = forwardRef<HTMLFormElement, SignInFormProps>(
   ({ children, className, ...props }, ref) => {
-    const form = useForm<SignInByEmailFormData>({
-      resolver: zodResolver(signInByEmailFormSchema),
+    const form = useForm<SignUpByEmailFormData>({
+      resolver: zodResolver(signUpByEmailFormSchema),
       defaultValues: {
         email: '',
         password: '',
+        passwordConfirmation: '',
       },
     });
 
-    const handleOnSubmit = (data: SignInByEmailFormData) => {};
+    const { registerAction, isError, errors, isLoading } = useRegisterApi();
+
+    const handleOnSubmit = async (data: SignUpByEmailFormData) => {
+      await registerAction(data);
+    };
 
     return (
       <Form {...form}>
@@ -56,8 +62,20 @@ export const SignInByEmailForm = forwardRef<HTMLFormElement, SignInFormProps>(
               </FormItem>
             )}
           />
+          <FormField
+            control={form.control}
+            name="passwordConfirmation"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input type={'password'} placeholder="Confirm password" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <Button type="submit" className="w-full">
-            Sign In with email
+            Sign Up with email
           </Button>
         </form>
       </Form>
@@ -65,4 +83,4 @@ export const SignInByEmailForm = forwardRef<HTMLFormElement, SignInFormProps>(
   }
 );
 
-SignInByEmailForm.displayName = 'SignInByEmailForm';
+SignUpByEmailForm.displayName = 'SignUpByEmailForm';

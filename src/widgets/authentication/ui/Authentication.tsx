@@ -1,9 +1,10 @@
 import Link from 'next/link';
 import React, { forwardRef } from 'react';
 
+import { AuthMode } from '@/entites/session';
 import { SignInByEmailForm } from '@/features/session/sign-in-by-email';
+import { SignUpByEmailForm } from '@/features/session/sign-up-by-email';
 import { cn, gv } from '@/shared/lib/utils';
-import { AuthMode } from '../model/types';
 
 interface AuthenticationProps extends React.HTMLAttributes<HTMLDivElement> {
   mode?: AuthMode;
@@ -28,12 +29,15 @@ export const Authentication = forwardRef<HTMLDivElement, AuthenticationProps>(
           </h1>
           <p className="text-sm text-muted-foreground">
             {gv(mode, {
-              [AuthMode.SignIn]: 'Enter your email below to login',
-              [AuthMode.SignUp]: 'Enter your email below to create your account',
+              [AuthMode.SignIn]: 'Enter your credentials below to login',
+              [AuthMode.SignUp]: 'Enter your credentials below to create your account',
             })}
           </p>
         </div>
-        {<SignInByEmailForm />}
+        {gv(mode, {
+          [AuthMode.SignIn]: <SignInByEmailForm />,
+          [AuthMode.SignUp]: <SignUpByEmailForm />,
+        })}
         <p className="px-8 text-center text-sm text-muted-foreground">
           By clicking continue, you agree to our{' '}
           <Link href="/terms" className="underline underline-offset-4 hover:text-primary">

@@ -1,5 +1,6 @@
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import { ROUTES } from '@/shared/consts/routes';
 
 /**
  * Combines multiple class values into a single string, merging Tailwind CSS classes when necessary.
