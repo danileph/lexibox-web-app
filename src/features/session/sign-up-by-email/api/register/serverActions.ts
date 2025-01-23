@@ -6,7 +6,7 @@ import { SignUpByEmailFormData } from '@/features/session/sign-up-by-email/model
 import { HttpQueryError, ServerActionState } from '@/shared/types/httpQueryTypes';
 
 export const registerAction = async (
-  prevState: ServerActionState,
+  // prevState: ServerActionState,
   data: SignUpByEmailFormData
 ): Promise<ServerActionState> => {
   const state: ServerActionState = {
@@ -21,6 +21,8 @@ export const registerAction = async (
       state.isError = true;
       state.errors = [error.data.errors];
       console.error(error.data);
+    } else {
+      throw error;
     }
   }
 

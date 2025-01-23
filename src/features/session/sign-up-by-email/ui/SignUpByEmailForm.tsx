@@ -74,7 +74,7 @@ export const SignUpByEmailForm = forwardRef<HTMLFormElement, SignInFormProps>(
               </FormItem>
             )}
           />
-          <Button type="submit" className="w-full">
+          <Button type="submit" className="w-full" disabled={isLoading}>
             Sign Up with email
           </Button>
         </form>

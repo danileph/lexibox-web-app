@@ -1,7 +1,7 @@
 'use client';
 
 import { ToastProvider } from '@radix-ui/react-toast';
-import { useToast } from '@/shared/hooks/use-toast';
+import { useToast } from '@/shared/hooks/toast-hook';
 import { cn } from '@/shared/lib/utils';
 import { Toast, ToastClose, ToastDescription, ToastTitle, ToastViewport } from '@/shared/ui/toast/Toast';
 
